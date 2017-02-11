@@ -14,6 +14,7 @@ public class CharacterMovement : MonoBehaviour {
 	private bool grounded = false;
 	float groundRadius = 0.2f;
 	public LayerMask groundLayer;
+	private bool doubleJump = false;
 
 	private Rigidbody2D rb2d;
 
@@ -33,11 +34,17 @@ public class CharacterMovement : MonoBehaviour {
 			Flip ();
 
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
+
+		if (grounded)
+			doubleJump = false;
 	}
 
 	void Update () {
-		if (grounded && Input.GetKeyDown (KeyCode.Space)) {
+		if ((grounded || !doubleJump) && Input.GetKeyDown (KeyCode.Space)) {
 			rb2d.AddForce(new Vector2(0, jumpForce));
+
+			if (!doubleJump && !grounded)
+				doubleJump = true;
 		}
 	}
 
