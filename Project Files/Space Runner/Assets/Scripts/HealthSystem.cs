@@ -11,6 +11,8 @@ public class HealthSystem : MonoBehaviour {
 	public LayerMask enemyLayer;
 	public LayerMask obstacleLayer;
 
+	public bool invincible = false;
+
 	void Start () {
 		currentHealth = maxHealth;
 		rb2d = GetComponent<Rigidbody2D> ();
@@ -26,7 +28,15 @@ public class HealthSystem : MonoBehaviour {
 	}
 
 	public void Damage(int dmg) {
-		currentHealth -= dmg;
+		if (!invincible) {
+			currentHealth -= dmg;
+			invincible = true;
+			Invoke ("resetInvincibility", 2);
+		}
+	}
+
+	void resetInvincibility() {
+		invincible = false;
 	}
 
 	void Die() {
@@ -34,9 +44,8 @@ public class HealthSystem : MonoBehaviour {
 	}
 
 	public void Knockback(float knockPower, Vector3 knockDirection) {
-		rb2d.velocity = new Vector2 (knockDirection.x * -100, knockDirection.y + knockPower);
-		Debug.Log ("X:" + knockDirection.x);
-		Debug.Log ("Y:" + knockDirection.y);
-		Debug.Log ("Power:" + knockPower);
+		if (!invincible) {
+			rb2d.velocity = new Vector2 (rb2d.velocity.x, knockDirection.y + knockPower);
+		}
 	}
 }

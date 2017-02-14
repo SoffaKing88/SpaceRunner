@@ -9,10 +9,12 @@ public class Obstacle : MonoBehaviour {
 		hero = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
 	}
 
-	void OnTriggerEnter2D(Collider2D enter) {
-		if (enter.CompareTag ("Player")) {
-			hero.Damage (1);
-			hero.Knockback (10f, hero.transform.position);
+	void OnTriggerStay2D(Collider2D enter) {
+		if (!hero.invincible){
+			if (enter.CompareTag ("Player")) {
+				hero.Knockback (10f, hero.transform.position);
+				hero.Damage (1);
+			}
 		}
 	}
 }
