@@ -4,7 +4,6 @@ using System.Collections;
 public class CharacterMovement : MonoBehaviour {
 
 	private bool facingRight = true;
-	private bool jump = false;
 
 	//public float moveForce = 1000f;
 	public float maxSpeed = 15f;

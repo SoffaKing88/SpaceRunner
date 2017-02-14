@@ -33,14 +33,10 @@ public class HealthSystem : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-	public IEnumerator Knockback(float knockDuration, float knockPower, Vector3 knockDirection) {
-		float time = 0;
-
-		while (knockDuration > time) {
-			time += Time.deltaTime;
-			rb2d.AddForce (new Vector3 (knockDirection.x * -100, knockDirection.y + knockPower, transform.position.z));
-		}
-
-		yield return 0;
+	public void Knockback(float knockPower, Vector3 knockDirection) {
+		rb2d.velocity = new Vector2 (knockDirection.x * -100, knockDirection.y + knockPower);
+		Debug.Log ("X:" + knockDirection.x);
+		Debug.Log ("Y:" + knockDirection.y);
+		Debug.Log ("Power:" + knockPower);
 	}
 }

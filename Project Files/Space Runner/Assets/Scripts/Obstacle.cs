@@ -12,8 +12,7 @@ public class Obstacle : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D enter) {
 		if (enter.CompareTag ("Player")) {
 			hero.Damage (1);
-
-			StartCoroutine (hero.Knockback (0.02f, 350f, hero.transform.position));
+			hero.Knockback (10f, hero.transform.position);
 		}
 	}
 }
