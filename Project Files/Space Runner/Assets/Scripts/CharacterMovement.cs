@@ -17,8 +17,11 @@ public class CharacterMovement : MonoBehaviour {
 
 	private Rigidbody2D rb2d;
 
+	private GameController gm;
+
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
+		gm = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 
 	void FixedUpdate () {
@@ -53,5 +56,12 @@ public class CharacterMovement : MonoBehaviour {
 		theScale.x *= -1;
 		transform.localScale = theScale;
 		//Debug.Log ("Flip");
+	}
+
+	void OnTriggerEnter2D(Collider2D coll){
+		if (coll.CompareTag ("Gem")) {
+			Destroy (coll.gameObject);
+			gm.gemAmount += 1;
+		}
 	}
 }
