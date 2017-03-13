@@ -27,6 +27,7 @@ public class HealthSystem : MonoBehaviour {
 	public void Damage(int dmg) {
 		if (!invincible) {
 			currentHealth -= dmg;
+			gameObject.GetComponent<Animation> ().Play ("Red_Flash");
 			invincible = true;
 			Invoke ("resetInvincibility", 2);
 		}
