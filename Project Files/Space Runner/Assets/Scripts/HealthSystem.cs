@@ -3,13 +3,10 @@ using System.Collections;
 
 public class HealthSystem : MonoBehaviour {
 
-	private int maxHealth = 5;
+	public int maxHealth = 5;
 	public int currentHealth;
 
 	private Rigidbody2D rb2d;
-
-	public LayerMask enemyLayer;
-	public LayerMask obstacleLayer;
 
 	public bool invincible = false;
 

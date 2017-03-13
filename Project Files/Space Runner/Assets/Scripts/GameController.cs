@@ -10,6 +10,6 @@ public class GameController : MonoBehaviour {
 
 	void Update() {
 		//gemText.text = ("Gems: " + gemAmount);
-		Debug.Log (gemAmount);
+		//Debug.Log (gemAmount);
 	}
 }
