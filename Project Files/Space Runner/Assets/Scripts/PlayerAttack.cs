@@ -10,13 +10,13 @@ public class PlayerAttack : MonoBehaviour {
 
 	public Collider2D attackTrigger;
 
-
-
 	void Awake() {
+		// Make sure collider isn't automatically on and hitting things
 		attackTrigger.enabled = false;
 	}
 
 	void Update() {
+		// Attack as long as you aren't already in the middle of an attack
 		if (Input.GetKeyDown ("c") && !attacking) {
 			attacking = true;
 			attackTimer = attackCD;

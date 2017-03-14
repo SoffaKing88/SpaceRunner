@@ -10,13 +10,14 @@ public class HealthSystem : MonoBehaviour {
 
 	public bool invincible = false;
 
+	// Variable initiation
 	void Start () {
 		currentHealth = maxHealth;
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		// Health Management checking
 		if (currentHealth > maxHealth)
 			currentHealth = maxHealth;
 
