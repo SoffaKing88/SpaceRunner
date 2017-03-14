@@ -7,7 +7,7 @@ public class CharacterMovement : MonoBehaviour {
 
 	//public float moveForce = 1000f;
 	public float maxSpeed = 15f;
-	public float jumpForce = 800f;
+	public float jumpForce = 550f;
 
 	public Transform groundCheck;
 	private bool grounded = false;
@@ -31,6 +31,10 @@ public class CharacterMovement : MonoBehaviour {
 		//Debug.Log (move);
 
 		rb2d.velocity = new Vector2 (move * maxSpeed, rb2d.velocity.y);
+		if (rb2d.velocity.y > maxSpeed) {
+			rb2d.velocity = new Vector2 (rb2d.velocity.x, maxSpeed);
+		}
+		Debug.Log (rb2d.velocity);
 
 		//Flip Character Direction (Sprite, colliders, etc.)
 		if (move > 0 && !facingRight)

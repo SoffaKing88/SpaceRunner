@@ -3,8 +3,9 @@ using System.Collections;
 
 public class HealthSystem : MonoBehaviour {
 
-	public int maxHealth = 5;
+	public int maxHealth;
 	public int currentHealth;
+	public int invincibleTime;
 
 	private Rigidbody2D rb2d;
 
@@ -30,7 +31,7 @@ public class HealthSystem : MonoBehaviour {
 			currentHealth -= dmg;
 			gameObject.GetComponent<Animation> ().Play ("Red_Flash");
 			invincible = true;
-			Invoke ("resetInvincibility", 2);
+			Invoke ("resetInvincibility", invincibleTime);
 		}
 	}
 
