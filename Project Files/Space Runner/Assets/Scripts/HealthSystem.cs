@@ -45,7 +45,7 @@ public class HealthSystem : MonoBehaviour {
 
 	public void Knockback(float knockPower, Vector3 knockDirection) {
 		if (!invincible) {
-			rb2d.velocity = new Vector2 (rb2d.velocity.x, knockDirection.y + knockPower);
+			rb2d.velocity = new Vector2 (rb2d.velocity.x + knockPower, knockDirection.y + knockPower);
 		}
 	}
 }
