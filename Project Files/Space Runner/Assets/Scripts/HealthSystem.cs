@@ -3,20 +3,22 @@ using System.Collections;
 
 public class HealthSystem : MonoBehaviour {
 
-	public int maxHealth = 5;
+	public int maxHealth;
 	public int currentHealth;
+	public int invincibleTime;
 
 	private Rigidbody2D rb2d;
 
 	public bool invincible = false;
 
+	// Variable initiation
 	void Start () {
 		currentHealth = maxHealth;
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		// Health Management checking
 		if (currentHealth > maxHealth)
 			currentHealth = maxHealth;
 
@@ -29,7 +31,7 @@ public class HealthSystem : MonoBehaviour {
 			currentHealth -= dmg;
 			gameObject.GetComponent<Animation> ().Play ("Red_Flash");
 			invincible = true;
-			Invoke ("resetInvincibility", 2);
+			Invoke ("resetInvincibility", invincibleTime);
 		}
 	}
 
@@ -43,7 +45,7 @@ public class HealthSystem : MonoBehaviour {
 
 	public void Knockback(float knockPower, Vector3 knockDirection) {
 		if (!invincible) {
-			rb2d.velocity = new Vector2 (rb2d.velocity.x, knockDirection.y + knockPower);
+			rb2d.velocity = new Vector2 (rb2d.velocity.x + knockPower, knockDirection.y + knockPower);
 		}
 	}
 }

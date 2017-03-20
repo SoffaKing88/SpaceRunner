@@ -7,7 +7,7 @@ public class CharacterMovement : MonoBehaviour {
 
 	//public float moveForce = 1000f;
 	public float maxSpeed = 15f;
-	public float jumpForce = 800f;
+	public float jumpForce = 550f;
 
 	public Transform groundCheck;
 	private bool grounded = false;
@@ -19,22 +19,30 @@ public class CharacterMovement : MonoBehaviour {
 
 	private GameController gm;
 
+	//Initiate objects in variables
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
 		gm = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 
 	void FixedUpdate () {
+		//Check which direction Character is moving, and move that direction
 		float move = Input.GetAxis ("Horizontal");
 		//Debug.Log (move);
 
 		rb2d.velocity = new Vector2 (move * maxSpeed, rb2d.velocity.y);
+		if (rb2d.velocity.y > maxSpeed) {
+			rb2d.velocity = new Vector2 (rb2d.velocity.x, maxSpeed);
+		}
+		Debug.Log (rb2d.velocity);
 
+		//Flip Character Direction (Sprite, colliders, etc.)
 		if (move > 0 && !facingRight)
 			Flip ();
 		else if (move < 0 && facingRight)
 			Flip ();
 
+		//Check if Character is on the ground, if so allow a double jump
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
 
 		if (grounded)
@@ -42,6 +50,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void Update () {
+		//If character is grounded or hasn't used their double jump and the space bar is hit, Jump
 		if ((grounded || !doubleJump) && Input.GetKeyDown (KeyCode.Space)) {
 			rb2d.AddForce(new Vector2(0, jumpForce));
 
@@ -58,9 +67,10 @@ public class CharacterMovement : MonoBehaviour {
 		//Debug.Log ("Flip");
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){
-		if (coll.CompareTag ("Gem")) {
-			Destroy (coll.gameObject);
+	void OnTriggerEnter2D(Collider2D col){
+		//If character hits a gem, destroy it and add to gem counter
+		if (col.CompareTag ("Gem")) {
+			Destroy (col.gameObject);
 			gm.gemAmount += 1;
 		}
 	}
