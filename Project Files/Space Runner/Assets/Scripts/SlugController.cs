@@ -18,6 +18,9 @@ public class SlugController : MonoBehaviour {
 	private bool hittingWall = false;
 	float wallRadius = 0.2f;
 	public LayerMask wallLayer;
+
+	private bool notAtEdge;
+	public Transform edgeCheck;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
@@ -28,10 +31,11 @@ public class SlugController : MonoBehaviour {
 
 	void FixedUpdate() {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
+		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallRadius, wallLayer);
 
-		if (hittingWall)
+		if (hittingWall || !notAtEdge)
 			Flip ();
-			
+
 
 		if (health.tookDamage) {
 			Knockback (400f);
