@@ -7,28 +7,37 @@ public class SlugController : MonoBehaviour {
 	private Rigidbody2D rb2d;
 
 	private bool facingRight = false;
+
+	private float knockbackTime;
+
+	private int moveTimer;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		if (health.tookDamage) {
-			Knockback (10f);
+			Knockback (400f);
+			health.tookDamage = false;
 		}
-		health.tookDamage = false;
+
+		if (knockbackTime > Time.time) {
+			knockbackTime -= Time.deltaTime;
+		}
 	}
 
 	public void Knockback(float knockPower) {
-		if (!health.invincible && facingRight) {
-			rb2d.velocity = new Vector2 (-knockPower, knockPower);
+		if (facingRight) {
+			rb2d.AddForce (new Vector2 (-knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
 		}
-		if (!health.invincible && !facingRight) {
-			rb2d.velocity = new Vector2 (knockPower, knockPower);
+		if (!facingRight) {
+			rb2d.AddForce (new Vector2 (knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
 		}
+		knockbackTime = Time.time + 1f;
 	}
 
 }

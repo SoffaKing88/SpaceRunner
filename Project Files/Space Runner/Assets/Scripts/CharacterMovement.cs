@@ -55,14 +55,14 @@ public class CharacterMovement : MonoBehaviour {
 
 		if (health.tookDamage) {
 			Knockback (400f);
-			Debug.Log (health.invincible);
+			//Debug.Log (health.invincible);
 			health.tookDamage = false;
 		}
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
 		}
-		Debug.Log (knockbackTime);
+		//Debug.Log (knockbackTime);
 	}
 
 	void Update () {
