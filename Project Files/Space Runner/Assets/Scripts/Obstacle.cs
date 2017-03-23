@@ -3,17 +3,19 @@ using System.Collections;
 
 public class Obstacle : MonoBehaviour {
 
-	private HealthSystem hero;
+	private HealthSystem heroHealth;
+	private CharacterMovement heroMove;
 
 	void Start(){
-		hero = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
+		heroHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
+		heroMove = GameObject.FindGameObjectWithTag ("Player").GetComponent<CharacterMovement> ();
 	}
 
 	void OnTriggerStay2D(Collider2D enter) {
-		if (!hero.invincible){
+		if (!heroHealth.invincible){
 			if (enter.CompareTag ("Player")) {
-				hero.Knockback (10f, hero.transform.position);
-				hero.Damage (1);
+				heroMove.Knockback (10f);
+				heroHealth.Damage (1);
 			}
 		}
 	}

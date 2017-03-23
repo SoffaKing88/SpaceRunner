@@ -16,13 +16,14 @@ public class CharacterMovement : MonoBehaviour {
 	private bool doubleJump = false;
 
 	private Rigidbody2D rb2d;
-
 	private GameController gm;
+	private HealthSystem health;
 
 	//Initiate objects in variables
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
 		gm = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		health = GetComponent<HealthSystem> ();
 	}
 
 	void FixedUpdate () {
@@ -34,7 +35,7 @@ public class CharacterMovement : MonoBehaviour {
 		if (rb2d.velocity.y > maxSpeed) {
 			rb2d.velocity = new Vector2 (rb2d.velocity.x, maxSpeed);
 		}
-		Debug.Log (rb2d.velocity);
+		//Debug.Log (rb2d.velocity);
 
 		//Flip Character Direction (Sprite, colliders, etc.)
 		if (move > 0 && !facingRight)
@@ -64,7 +65,7 @@ public class CharacterMovement : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-		//Debug.Log ("Flip");
+		Debug.Log ("Flip:" + facingRight);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -72,6 +73,17 @@ public class CharacterMovement : MonoBehaviour {
 		if (col.CompareTag ("Gem")) {
 			Destroy (col.gameObject);
 			gm.gemAmount += 1;
+		}
+	}
+
+	public void Knockback(float knockPower) {
+		if (!health.invincible && facingRight) {
+			rb2d.velocity = new Vector2 (-knockPower, knockPower);
+			Debug.Log (rb2d.velocity);
+		}
+		if (!health.invincible && !facingRight) {
+			rb2d.velocity = new Vector2 (knockPower, knockPower);
+			Debug.Log (rb2d.velocity);
 		}
 	}
 }

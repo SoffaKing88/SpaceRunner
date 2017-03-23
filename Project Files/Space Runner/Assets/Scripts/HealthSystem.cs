@@ -7,6 +7,8 @@ public class HealthSystem : MonoBehaviour {
 	public int currentHealth;
 	public int invincibleTime;
 
+	public bool tookDamage;
+
 	private Rigidbody2D rb2d;
 
 	public bool invincible = false;
@@ -26,13 +28,16 @@ public class HealthSystem : MonoBehaviour {
 			Die ();
 	}
 
-	public void Damage(int dmg) {
+	public bool Damage(int dmg) {
+		tookDamage = false;
 		if (!invincible) {
 			currentHealth -= dmg;
 			gameObject.GetComponent<Animation> ().Play ("Red_Flash");
+			tookDamage = true;
 			invincible = true;
 			Invoke ("resetInvincibility", invincibleTime);
 		}
+		return tookDamage;
 	}
 
 	void resetInvincibility() {
@@ -41,11 +46,5 @@ public class HealthSystem : MonoBehaviour {
 
 	void Die() {
 		Destroy (gameObject);
-	}
-
-	public void Knockback(float knockPower, Vector3 knockDirection) {
-		if (!invincible) {
-			rb2d.velocity = new Vector2 (rb2d.velocity.x + knockPower, knockDirection.y + knockPower);
-		}
 	}
 }
