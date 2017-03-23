@@ -5,6 +5,7 @@ public class SlugController : MonoBehaviour {
 
 	private HealthSystem health;
 	private HealthSystem heroHealth;
+	private Transform heroTrans;
 	private Rigidbody2D rb2d;
 
 	private bool facingRight = false;
@@ -21,6 +22,7 @@ public class SlugController : MonoBehaviour {
 	void Start () {
 		health = GetComponent<HealthSystem> ();
 		heroHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
+		heroTrans = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
 
@@ -54,7 +56,7 @@ public class SlugController : MonoBehaviour {
 	}
 
 	public void Knockback(float knockPower) {
-		if (facingRight) {
+		if (heroTrans.position.x > transform.position.x) {
 			rb2d.AddForce (new Vector2 (-knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
 		} else {
