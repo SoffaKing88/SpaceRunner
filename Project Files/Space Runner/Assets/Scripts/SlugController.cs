@@ -11,6 +11,11 @@ public class SlugController : MonoBehaviour {
 	private float knockbackTime;
 
 	private float moveTimer;
+
+	public Transform wallCheck;
+	private bool hittingWall = false;
+	float wallRadius = 0.2f;
+	public LayerMask wallLayer;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
@@ -18,6 +23,12 @@ public class SlugController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
+
+		if (hittingWall)
+			Flip ();
+			
+
 		if (health.tookDamage) {
 			Knockback (400f);
 			health.tookDamage = false;
@@ -29,8 +40,11 @@ public class SlugController : MonoBehaviour {
 			moveTimer++;
 		}
 
-		if (moveTimer > 40) {
+		if (moveTimer > 40 && !facingRight) {
 			rb2d.AddForce (new Vector2(-10f - moveTimer/1.5f, rb2d.velocity.y));
+		}
+		if (moveTimer > 40 && facingRight) {
+			rb2d.AddForce (new Vector2(10f + moveTimer/1.5f, rb2d.velocity.y));
 		}
 
 		if (moveTimer >= 50) {
@@ -42,12 +56,19 @@ public class SlugController : MonoBehaviour {
 		if (facingRight) {
 			rb2d.AddForce (new Vector2 (-knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
-		}
-		if (!facingRight) {
+		} else {
 			rb2d.AddForce (new Vector2 (knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
 		}
 		knockbackTime = Time.time + 2f;
+	}
+
+	void Flip() {
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+		//Debug.Log ("Flip:" + facingRight);
 	}
 
 }

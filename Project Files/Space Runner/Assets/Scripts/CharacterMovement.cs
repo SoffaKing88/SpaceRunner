@@ -95,8 +95,7 @@ public class CharacterMovement : MonoBehaviour {
 		if (facingRight) {
 			rb2d.AddForce(new Vector2 (-knockPower, 1.5f * knockPower));
 			//Debug.Log (rb2d.velocity);
-		}
-		if (!facingRight) {
+		} else {
 			rb2d.AddForce(new Vector2 (knockPower, 1.5f * knockPower));
 			//Debug.Log (rb2d.velocity);
 		}
