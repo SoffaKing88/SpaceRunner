@@ -17,14 +17,17 @@ public class SlugController : MonoBehaviour {
 		if (health.tookDamage) {
 			Knockback (10f);
 		}
+		health.tookDamage = false;
 	}
 
 	public void Knockback(float knockPower) {
 		if (!health.invincible && facingRight) {
 			rb2d.velocity = new Vector2 (-knockPower, knockPower);
+			Debug.Log (rb2d.velocity);
 		}
 		if (!health.invincible && !facingRight) {
 			rb2d.velocity = new Vector2 (knockPower, knockPower);
+			Debug.Log (rb2d.velocity);
 		}
 	}
 

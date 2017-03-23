@@ -19,6 +19,8 @@ public class CharacterMovement : MonoBehaviour {
 	private GameController gm;
 	private HealthSystem health;
 
+	public float knockbackTime;
+
 	//Initiate objects in variables
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
@@ -31,9 +33,11 @@ public class CharacterMovement : MonoBehaviour {
 		float move = Input.GetAxis ("Horizontal");
 		//Debug.Log (move);
 
-		rb2d.velocity = new Vector2 (move * maxSpeed, rb2d.velocity.y);
-		if (rb2d.velocity.y > maxSpeed) {
-			rb2d.velocity = new Vector2 (rb2d.velocity.x, maxSpeed);
+		if (move != 0 && knockbackTime < Time.time) {
+			rb2d.velocity = new Vector2 (move * maxSpeed, rb2d.velocity.y);
+			if (rb2d.velocity.y > maxSpeed) {
+				rb2d.velocity = new Vector2 (rb2d.velocity.x, maxSpeed);
+			}
 		}
 		//Debug.Log (rb2d.velocity);
 
@@ -48,6 +52,17 @@ public class CharacterMovement : MonoBehaviour {
 
 		if (grounded)
 			doubleJump = false;
+
+		if (health.tookDamage) {
+			Knockback (400f);
+			Debug.Log (health.invincible);
+			health.tookDamage = false;
+		}
+
+		if (knockbackTime > Time.time) {
+			knockbackTime -= Time.deltaTime;
+		}
+		Debug.Log (knockbackTime);
 	}
 
 	void Update () {
@@ -65,7 +80,7 @@ public class CharacterMovement : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-		Debug.Log ("Flip:" + facingRight);
+		//Debug.Log ("Flip:" + facingRight);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -77,13 +92,14 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	public void Knockback(float knockPower) {
-		if (!health.invincible && facingRight) {
-			rb2d.velocity = new Vector2 (-knockPower, knockPower);
-			Debug.Log (rb2d.velocity);
+		if (facingRight) {
+			rb2d.AddForce(new Vector2 (-knockPower, 1.5f * knockPower));
+			//Debug.Log (rb2d.velocity);
 		}
-		if (!health.invincible && !facingRight) {
-			rb2d.velocity = new Vector2 (knockPower, knockPower);
-			Debug.Log (rb2d.velocity);
+		if (!facingRight) {
+			rb2d.AddForce(new Vector2 (knockPower, 1.5f * knockPower));
+			//Debug.Log (rb2d.velocity);
 		}
+		knockbackTime = Time.time + 1f;
 	}
 }
