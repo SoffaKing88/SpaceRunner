@@ -10,7 +10,7 @@ public class SlugController : MonoBehaviour {
 
 	private float knockbackTime;
 
-	private int moveTimer;
+	private float moveTimer;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
@@ -25,6 +25,16 @@ public class SlugController : MonoBehaviour {
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
+		} else {
+			moveTimer++;
+		}
+
+		if (moveTimer > 40) {
+			rb2d.AddForce (new Vector2(-10f - moveTimer/1.5f, rb2d.velocity.y));
+		}
+
+		if (moveTimer >= 50) {
+			moveTimer = 0;
 		}
 	}
 
@@ -37,7 +47,7 @@ public class SlugController : MonoBehaviour {
 			rb2d.AddForce (new Vector2 (knockPower, 1.5f * knockPower));
 			Debug.Log (rb2d.velocity);
 		}
-		knockbackTime = Time.time + 1f;
+		knockbackTime = Time.time + 2f;
 	}
 
 }

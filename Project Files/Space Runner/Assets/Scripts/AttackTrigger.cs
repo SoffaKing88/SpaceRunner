@@ -4,7 +4,7 @@ using System.Collections;
 public class AttackTrigger : MonoBehaviour {
 
 	private HealthSystem enemy;
-	private SlugController slug;
+	//private SlugController slug;
 
 	public int dmg = 1;
 
@@ -12,9 +12,7 @@ public class AttackTrigger : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.isTrigger != true && col.CompareTag ("Enemy")) {
 			enemy = col.gameObject.GetComponent<HealthSystem>();
-			slug = col.gameObject.GetComponent<SlugController> ();
 			enemy.Damage(dmg);
-			slug.Knockback (10f);
 		}
 	}
 }
