@@ -4,6 +4,7 @@ using System.Collections;
 public class SlugController : MonoBehaviour {
 
 	private HealthSystem health;
+	private HealthSystem heroHealth;
 	private Rigidbody2D rb2d;
 
 	private bool facingRight = false;
@@ -19,6 +20,7 @@ public class SlugController : MonoBehaviour {
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
+		heroHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
 
@@ -36,14 +38,13 @@ public class SlugController : MonoBehaviour {
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
-		} else {
-			moveTimer++;
 		}
+			moveTimer++;
 
-		if (moveTimer > 40 && !facingRight) {
+		if (moveTimer > 40 && !facingRight && knockbackTime < Time.time) {
 			rb2d.AddForce (new Vector2(-10f - moveTimer/1.5f, rb2d.velocity.y));
 		}
-		if (moveTimer > 40 && facingRight) {
+		if (moveTimer > 40 && facingRight && knockbackTime < Time.time) {
 			rb2d.AddForce (new Vector2(10f + moveTimer/1.5f, rb2d.velocity.y));
 		}
 
@@ -69,6 +70,14 @@ public class SlugController : MonoBehaviour {
 		theScale.x *= -1;
 		transform.localScale = theScale;
 		//Debug.Log ("Flip:" + facingRight);
+	}
+
+	void OnTriggerStay2D(Collider2D enter) {
+		if (!heroHealth.invincible){
+			if (enter.CompareTag ("Player")) {
+				heroHealth.Damage (1);
+			}
+		}
 	}
 
 }
