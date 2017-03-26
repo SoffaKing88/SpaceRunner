@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SlugController : MonoBehaviour {
 
+	private GameObject hero;
 	private HealthSystem health;
 	private HealthSystem heroHealth;
 	private Transform heroTrans;
@@ -24,8 +25,9 @@ public class SlugController : MonoBehaviour {
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
-		heroHealth = GameObject.FindGameObjectWithTag ("Player").GetComponent<HealthSystem> ();
-		heroTrans = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
+		hero = GameObject.FindGameObjectWithTag ("Player");
+		heroHealth = hero.GetComponent<HealthSystem> ();
+		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 	}
 
@@ -40,12 +42,14 @@ public class SlugController : MonoBehaviour {
 		if (health.tookDamage) {
 			Knockback (400f);
 			health.tookDamage = false;
+			moveTimer = 0;
 		}
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
 		}
-			moveTimer++;
+
+		moveTimer++;
 
 		if (moveTimer > 40 && !facingRight && knockbackTime < Time.time) {
 			rb2d.AddForce (new Vector2(-10f - moveTimer/1.5f, rb2d.velocity.y));
@@ -56,6 +60,10 @@ public class SlugController : MonoBehaviour {
 
 		if (moveTimer >= 50) {
 			moveTimer = 0;
+		}
+
+		if(heroHealth.invincible){
+			Physics2D.IgnoreCollision (hero.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D> ());
 		}
 	}
 

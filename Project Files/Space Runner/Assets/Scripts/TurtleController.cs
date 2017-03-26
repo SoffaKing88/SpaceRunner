@@ -43,11 +43,13 @@ public class TurtleController : MonoBehaviour {
 		if (health.tookDamage) {
 			Knockback (150f);
 			health.tookDamage = false;
+			moveTimer = 0;
 		}
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
 		}
+
 		moveTimer++;
 
 		if (moveTimer > 60 && !facingRight && knockbackTime < Time.time) {

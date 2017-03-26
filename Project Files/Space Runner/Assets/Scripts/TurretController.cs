@@ -24,14 +24,6 @@ public class TurretController : MonoBehaviour {
 
 	void RangeCheck() {
 		distance = Vector3.Distance (transform.position, target.transform.position);
-
-		if (distance < lookRange) {
-			//Debug.Log ("Enter Range");
-		}
-
-		if (distance > lookRange) {
-			//Debug.Log ("Leave Range");
-		}
 	}
 
 	public void Attack() {
