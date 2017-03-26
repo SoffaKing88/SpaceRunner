@@ -18,6 +18,9 @@ public class TurtleController : MonoBehaviour {
 	float wallRadius = 0.2f;
 	public LayerMask wallLayer;
 
+	public GameObject spark;
+	public Transform sparkPoint;
+
 	private bool notAtEdge;
 	public Transform edgeCheck;
 
@@ -54,6 +57,10 @@ public class TurtleController : MonoBehaviour {
 			rb2d.velocity = new Vector2 (2f, rb2d.velocity.y);
 		}
 
+		if (moveTimer == 80) {
+			Attack ();
+		}
+
 		if (moveTimer >= 80) {
 			moveTimer = 0;
 		}
@@ -87,5 +94,13 @@ public class TurtleController : MonoBehaviour {
 				heroHealth.Damage (1);
 			}
 		}
+	}
+
+	public void Attack(){
+		GameObject sparkClone;
+		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation) as GameObject;
+		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (-4f, 0f);
+		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation) as GameObject;
+		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (+4f, 0f);
 	}
 }
