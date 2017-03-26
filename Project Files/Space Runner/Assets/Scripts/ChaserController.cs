@@ -11,6 +11,11 @@ public class ChaserController : MonoBehaviour {
 
 	private float maxSpeed = 20f;
 
+	public Transform groundCheck;
+	private bool grounded = false;
+	float groundRadius = 0.2f;
+	public LayerMask groundLayer;
+
 	void Start () {
 		health = GetComponent<HealthSystem> ();
 		hero = GameObject.FindGameObjectWithTag ("Player");
@@ -34,10 +39,12 @@ public class ChaserController : MonoBehaviour {
 		if (rb2d.velocity.y > maxSpeed)
 			rb2d.velocity = new Vector2 (maxSpeed, rb2d.velocity.y);
 
-		if (heroTrans.transform.position.x - 3f <= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f)
-			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 100f));
-		if (heroTrans.transform.position.x + 3f >= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f)
-			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 100f));
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
+
+		if (heroTrans.transform.position.x - 3f <= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)
+			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
+		if (heroTrans.transform.position.x + 3f >= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)
+			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
 	}
 
 	void OnTriggerStay2D(Collider2D enter) {
