@@ -29,6 +29,7 @@ public class HealthSystem : MonoBehaviour {
 	}
 
 	public bool Damage(int dmg) {
+		//returning tookDamage is used for Knockback in movement scripts
 		tookDamage = false;
 		if (!invincible) {
 			currentHealth -= dmg;

@@ -25,10 +25,12 @@ public class ChaserController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		//If player is invincible allow player to pass through the enemy
 		if(heroHealth.invincible){
 			Physics2D.IgnoreCollision (hero.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D> ());
 		}
 
+		//Movement Management
 		if (heroTrans.transform.position.x < transform.position.x)
 			rb2d.AddForce (new Vector2(-30f, rb2d.velocity.y));
 		if (heroTrans.transform.position.x > transform.position.x)
@@ -39,6 +41,7 @@ public class ChaserController : MonoBehaviour {
 		if (rb2d.velocity.y > maxSpeed)
 			rb2d.velocity = new Vector2 (maxSpeed, rb2d.velocity.y);
 
+		//Jumping Management
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
 
 		if (heroTrans.transform.position.x - 3f <= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)

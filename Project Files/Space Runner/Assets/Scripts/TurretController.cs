@@ -16,6 +16,7 @@ public class TurretController : MonoBehaviour {
 
 	void Start() {
 		health = GetComponent<HealthSystem> ();
+		target = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
 	void Update() {
@@ -27,6 +28,7 @@ public class TurretController : MonoBehaviour {
 	}
 
 	public void Attack() {
+		//To make sure the tower only fires once every interval and not every frame
 		bulletTimer += Time.deltaTime;
 
 		if (bulletTimer >= shootInterval) {

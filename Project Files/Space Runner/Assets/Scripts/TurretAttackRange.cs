@@ -9,8 +9,8 @@ public class TurretAttackRange : MonoBehaviour {
 		turretController = gameObject.GetComponentInParent<TurretController> ();
 	}
 
+	//If Player walks into range, start attacking
 	void OnTriggerStay2D(Collider2D col){
-
 		if (col.CompareTag ("Player")) {
 			turretController.Attack ();
 		}

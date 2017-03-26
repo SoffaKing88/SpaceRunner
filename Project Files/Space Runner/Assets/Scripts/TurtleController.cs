@@ -33,13 +33,14 @@ public class TurtleController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		//Checking for edges/walls to turn around
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallRadius, wallLayer);
 
 		if (hittingWall || !notAtEdge)
 			Flip ();
 
-
+		//Knockback Management
 		if (health.tookDamage) {
 			Knockback (150f);
 			health.tookDamage = false;
@@ -50,6 +51,7 @@ public class TurtleController : MonoBehaviour {
 			knockbackTime -= Time.deltaTime;
 		}
 
+		//Movement Management
 		moveTimer++;
 
 		if (moveTimer > 60 && !facingRight && knockbackTime < Time.time) {
@@ -67,6 +69,7 @@ public class TurtleController : MonoBehaviour {
 			moveTimer = 0;
 		}
 
+		//Ignore collision while hero is invincible
 		if(heroHealth.invincible){
 			Physics2D.IgnoreCollision (hero.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D> ());
 		}
@@ -75,10 +78,8 @@ public class TurtleController : MonoBehaviour {
 	public void Knockback(float knockPower) {
 		if (heroTrans.position.x > transform.position.x) {
 			rb2d.AddForce (new Vector2 (-knockPower, 1.5f * knockPower));
-			Debug.Log (rb2d.velocity);
 		} else {
 			rb2d.AddForce (new Vector2 (knockPower, 1.5f * knockPower));
-			Debug.Log (rb2d.velocity);
 		}
 		knockbackTime = Time.time + 2f;
 	}

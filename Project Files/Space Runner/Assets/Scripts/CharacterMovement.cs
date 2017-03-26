@@ -3,12 +3,12 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 
+	//Used for horizontal movement
 	private bool facingRight = true;
-
-	//public float moveForce = 1000f;
 	public float maxSpeed = 15f;
-	public float jumpForce = 500f;
 
+	//Used for Jumping
+	public float jumpForce = 500f;
 	public Transform groundCheck;
 	private bool grounded = false;
 	float groundRadius = 0.2f;
@@ -31,7 +31,6 @@ public class CharacterMovement : MonoBehaviour {
 	void FixedUpdate () {
 		//Check which direction Character is moving, and move that direction
 		float move = Input.GetAxis ("Horizontal");
-		//Debug.Log (move);
 
 		//Speed Management
 		if (move != 0 && knockbackTime < Time.time) {
@@ -43,7 +42,6 @@ public class CharacterMovement : MonoBehaviour {
 		if (rb2d.velocity.y < -maxSpeed) {
 			rb2d.velocity = new Vector2 (rb2d.velocity.x, -maxSpeed);
 		}
-		Debug.Log (rb2d.velocity);
 
 		//Flip Character Direction (Sprite, colliders, etc.)
 		if (move > 0 && !facingRight)
@@ -59,14 +57,12 @@ public class CharacterMovement : MonoBehaviour {
 
 		if (health.tookDamage) {
 			Knockback (400f);
-			//Debug.Log (health.invincible);
 			health.tookDamage = false;
 		}
 
 		if (knockbackTime > Time.time) {
 			knockbackTime -= Time.deltaTime;
 		}
-		//Debug.Log (knockbackTime);
 	}
 
 	void Update () {
@@ -84,7 +80,6 @@ public class CharacterMovement : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-		//Debug.Log ("Flip:" + facingRight);
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
@@ -98,10 +93,8 @@ public class CharacterMovement : MonoBehaviour {
 	public void Knockback(float knockPower) {
 		if (facingRight) {
 			rb2d.AddForce(new Vector2 (-knockPower, 1.5f * knockPower));
-			//Debug.Log (rb2d.velocity);
 		} else {
 			rb2d.AddForce(new Vector2 (knockPower, 1.5f * knockPower));
-			//Debug.Log (rb2d.velocity);
 		}
 		knockbackTime = Time.time + 1f;
 	}

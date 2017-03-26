@@ -32,13 +32,14 @@ public class SlugController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		//Checking for edges/walls to turn around
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallRadius, wallLayer);
 
 		if (hittingWall || !notAtEdge)
 			Flip ();
 
-
+		//Knockback Management
 		if (health.tookDamage) {
 			Knockback (400f);
 			health.tookDamage = false;
@@ -49,6 +50,7 @@ public class SlugController : MonoBehaviour {
 			knockbackTime -= Time.deltaTime;
 		}
 
+		//Movement Management
 		moveTimer++;
 
 		if (moveTimer > 40 && !facingRight && knockbackTime < Time.time) {
@@ -62,6 +64,7 @@ public class SlugController : MonoBehaviour {
 			moveTimer = 0;
 		}
 
+		//Ignoring collision while Player is invincible
 		if(heroHealth.invincible){
 			Physics2D.IgnoreCollision (hero.GetComponent<Collider2D>(), gameObject.GetComponent<Collider2D> ());
 		}
@@ -70,10 +73,8 @@ public class SlugController : MonoBehaviour {
 	public void Knockback(float knockPower) {
 		if (heroTrans.position.x > transform.position.x) {
 			rb2d.AddForce (new Vector2 (-knockPower, 1.5f * knockPower));
-			Debug.Log (rb2d.velocity);
 		} else {
 			rb2d.AddForce (new Vector2 (knockPower, 1.5f * knockPower));
-			Debug.Log (rb2d.velocity);
 		}
 		knockbackTime = Time.time + 2f;
 	}
@@ -83,7 +84,6 @@ public class SlugController : MonoBehaviour {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-		//Debug.Log ("Flip:" + facingRight);
 	}
 
 	void OnTriggerStay2D(Collider2D enter) {
