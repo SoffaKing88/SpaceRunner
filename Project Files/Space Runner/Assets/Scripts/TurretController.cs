@@ -10,12 +10,10 @@ public class TurretController : MonoBehaviour {
 	public float lookRange;
 
 	public GameObject bullet;
-	private HealthSystem health;
 	public Transform target;
 	public Transform shootPoint;
 
 	void Start() {
-		health = GetComponent<HealthSystem> ();
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
