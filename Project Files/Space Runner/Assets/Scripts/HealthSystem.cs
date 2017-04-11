@@ -9,14 +9,11 @@ public class HealthSystem : MonoBehaviour {
 
 	public bool tookDamage;
 
-	private Rigidbody2D rb2d;
-
 	public bool invincible = false;
 
 	// Variable initiation
 	void Start () {
 		currentHealth = maxHealth;
-		rb2d = GetComponent<Rigidbody2D> ();
 	}
 
 	void Update () {

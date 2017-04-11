@@ -4,7 +4,6 @@ using System.Collections;
 public class ChaserController : MonoBehaviour {
 
 	private GameObject hero;
-	private HealthSystem health;
 	private HealthSystem heroHealth;
 	private Transform heroTrans;
 	private Rigidbody2D rb2d;
@@ -17,7 +16,6 @@ public class ChaserController : MonoBehaviour {
 	public LayerMask groundLayer;
 
 	void Start () {
-		health = GetComponent<HealthSystem> ();
 		hero = GameObject.FindGameObjectWithTag ("Player");
 		heroHealth = hero.GetComponent<HealthSystem> ();
 		heroTrans = hero.GetComponent<Transform> ();
