@@ -3,17 +3,10 @@ using System.Collections;
 
 public class CameraMovement : MonoBehaviour {
 
-	private float moveSpeed = 0.8f;
-
-	private Vector3 gameDirection = Vector3.right;
-
 	public float shakeTimer;
 	public float shakeAmount;
 
 	void Update () {
-		//Slowly Moves Camera to the right. Will implement speed up later on
-		//transform.Translate (gameDirection * moveSpeed * Time.deltaTime);
-
 		//Finds a random position a small distance away from original, moves the camera there
 		if (shakeTimer >= 0) {
 			Vector2 ShakePos = Random.insideUnitCircle * shakeAmount;
