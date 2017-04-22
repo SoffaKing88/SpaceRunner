@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 		SpawnRooms(index);
 		Instantiate (hero, heroSpawn, spawnPoint.rotation);
 		StartCoroutine (GottaGoFast ());
+		StartCoroutine (GameStart ());
 	}
 
 	void Update() {
@@ -67,5 +68,15 @@ public class GameController : MonoBehaviour {
 			gameSpeed += 1f;
 			Debug.Log ("GOTTA GO FAST");
 		}
+	}
+
+	IEnumerator GameStart(){
+		Time.timeScale = 0;
+		Debug.Log ("Game Start in: ");
+		for (int i = 3; i >= 0; i--) {
+			Debug.Log (i);
+			yield return new WaitForSecondsRealtime (1f);
+		}
+		Time.timeScale = 1;
 	}
 }

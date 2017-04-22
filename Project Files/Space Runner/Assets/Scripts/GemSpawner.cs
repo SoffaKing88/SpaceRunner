@@ -45,10 +45,8 @@ public class GemSpawner : MonoBehaviour {
 		if (spaceCheck) {
 			Instantiate (gem, transform.position, transform.rotation);
 			seconds = Random.Range (1f, (12f / gameSpeed));
-			Debug.Log ("SPAWN SUCCESS " + seconds);
 		} else {
 			seconds = Random.Range (0f, 0.3f);
-			Debug.Log ("SPAWN FAIL");
 		}
 		yield return new WaitForSeconds (seconds);
 		StartCoroutine (SpawnGem ());
