@@ -42,6 +42,11 @@ public class CharacterMovement : MonoBehaviour {
 		if (rb2d.velocity.y < -maxSpeed) {
 			rb2d.velocity = new Vector2 (rb2d.velocity.x, -maxSpeed);
 		}
+		if (move == 0 && facingRight) {
+			transform.Translate (Vector3.left * gm.gameSpeed * Time.deltaTime);
+		} else if (move == 0 && !facingRight) {
+			transform.Translate (Vector3.right * gm.gameSpeed * Time.deltaTime);
+		}
 
 		//Flip Character Direction (Sprite, colliders, etc.)
 		if (move > 0 && !facingRight)

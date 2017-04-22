@@ -4,22 +4,25 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+	public GameObject hero;
+	private Vector3 heroSpawn = new Vector3 (-16, -5);
+
 	public int gemAmount = 0;
 	public Text gemText;
 
 	public GameObject[] levels;
 	private Transform spawnPoint;
 	private int index;
+	private int lastIndex;
+	private int[] validChoices;
 
 	public float gameSpeed = 3f;
 
 	void Start(){
 		spawnPoint = GetComponent<Transform> ();
-		Instantiate (levels [0], spawnPoint.position, spawnPoint.rotation);
-		spawnPoint.position = new Vector3(spawnPoint.position.x + 35f, spawnPoint.position.y);
-		index = Random.Range (0, levels.Length);
-		Instantiate (levels [index], spawnPoint.position, spawnPoint.rotation);
-		//StartCoroutine(SpawnRoom());
+		index = 0;
+		SpawnRooms(index);
+		Instantiate (hero, heroSpawn, spawnPoint.rotation);
 		StartCoroutine (GottaGoFast ());
 	}
 
@@ -27,28 +30,42 @@ public class GameController : MonoBehaviour {
 		//gemText.text = ("Gems: " + gemAmount);
 		//Debug.Log (gemAmount);
 		//Debug.Log(Time.time);
-		Debug.Log(Time.time);
 		transform.Translate (Vector3.left * gameSpeed * Time.deltaTime);
 
-		if (spawnPoint.position.x < 0) {
+		if (spawnPoint.position.x < 35) {
 			spawnPoint.position = new Vector3(spawnPoint.position.x + 35f, spawnPoint.position.y);
 			index = Random.Range (0, levels.Length);
-			Instantiate (levels [index], spawnPoint.position, spawnPoint.rotation);
+			if (lastIndex == 0 || (lastIndex == 0 && lastIndex == index)) {
+				validChoices = new int[] {1, 2, 3};
+				index = validChoices [Random.Range (0, validChoices.Length)];
+				SpawnRooms (index);
+			} else if (lastIndex == 1) {
+				SpawnRooms (index);
+			} else if (lastIndex == 2) {
+				SpawnRooms (index);
+			} else if (lastIndex == 3) {
+				validChoices = new int[] {1, 2, 3, 4};
+				index = validChoices [Random.Range (0, validChoices.Length)];
+				SpawnRooms (index);
+			} else if (lastIndex == 4) {
+				validChoices = new int[] {1, 2, 3};
+				index = validChoices [Random.Range (0, validChoices.Length)];
+				SpawnRooms (index);
+			}
 		}
 	}
 
-	/*IEnumerator SpawnRoom(){
-		index = Random.Range (0, levels.Length);
-		Instantiate (levels [index], spawnPoint.position, spawnPoint.rotation);
-		Debug.Log("SPAWN " + (gameSpeed));
-		yield return new WaitForSeconds (gameSpeed * timer);
-		StartCoroutine (SpawnRoom ());
-	}*/
+	void SpawnRooms(int spawnIndex){
+		//Debug.Log ("LI: " + lastIndex + " I: " + index);
+		Instantiate (levels [spawnIndex], spawnPoint.position, spawnPoint.rotation);
+		lastIndex = spawnIndex;
+	}
 
 	IEnumerator GottaGoFast(){
 		for (int i = 0; i < 3; i++) {
 			yield return new WaitForSeconds (30f);
 			gameSpeed += 1f;
+			Debug.Log ("GOTTA GO FAST");
 		}
 	}
 }
