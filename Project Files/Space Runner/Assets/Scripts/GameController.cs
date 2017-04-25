@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-	public GameObject hero;
-	private Vector3 heroSpawn = new Vector3 (-16, -5);
-
 	public int gemAmount = 0;
 	public Text gemText;
 
@@ -22,7 +19,6 @@ public class GameController : MonoBehaviour {
 		spawnPoint = GetComponent<Transform> ();
 		index = 0;
 		SpawnRooms(index);
-		Instantiate (hero, heroSpawn, spawnPoint.rotation);
 		StartCoroutine (GottaGoFast ());
 		StartCoroutine (GameStart ());
 	}
