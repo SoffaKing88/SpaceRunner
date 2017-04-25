@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour {
 
 	public float gameSpeed = 3f;
 
+	public GameObject[] enemies;
+
 	void Start(){
 		spawnPoint = GetComponent<Transform> ();
 		index = 0;
@@ -59,10 +61,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator GottaGoFast(){
-		for (int i = 0; i < 3; i++) {
-			yield return new WaitForSeconds (30f);
+		for (int i = 0; i < 10; i++) {
+			yield return new WaitForSeconds (10f);
 			gameSpeed += 1f;
-			Debug.Log ("GOTTA GO FAST");
+			Debug.Log ("GOTTA GO FAST" + gameSpeed);
 		}
 	}
 
