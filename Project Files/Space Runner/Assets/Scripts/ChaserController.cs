@@ -37,9 +37,9 @@ public class ChaserController : MonoBehaviour {
 		}
 
 		//Movement Management
-		if (heroTrans.transform.position.x < transform.position.x)
+		if (heroTrans.transform.position.x < transform.position.x && (transform.position.x - heroTrans.transform.position.x) < 15)
 			rb2d.AddForce (new Vector2(-30f, rb2d.velocity.y));
-		if (heroTrans.transform.position.x > transform.position.x)
+		if (heroTrans.transform.position.x > transform.position.x && (heroTrans.transform.position.x - transform.position.x ) < 15)
 			rb2d.AddForce (new Vector2(30f, rb2d.velocity.y));
 
 		if (rb2d.velocity.x > maxSpeed)

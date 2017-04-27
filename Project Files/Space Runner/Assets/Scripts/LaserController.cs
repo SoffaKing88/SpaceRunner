@@ -11,7 +11,7 @@ public class LaserController : MonoBehaviour {
 
 	void Start() {
 		laser = GetComponent<Collider2D> ();
-		beam = transform.Find("Beam").GetComponent<SpriteRenderer>();
+		beam = GameObject.Find("Beam").GetComponent<SpriteRenderer>();
 		laser.enabled = false;
 		beam.enabled = false;
 		StartCoroutine (FireLaser ());
