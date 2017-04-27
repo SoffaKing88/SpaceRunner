@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour {
 
 	private GameController gControl;
 	private float chance;
-	private float spawn = 70f;
+	private float spawn = 30f;
 	private GameObject[] enemies;
 
 	// Use this for initialization
@@ -17,8 +17,8 @@ public class EnemySpawner : MonoBehaviour {
 		chance = Random.Range (0f, 100f);
 		for (int i = 0; i < spawnPoints.Length; i++) {
 			if (chance > spawn) {
-				Instantiate (enemies [Random.Range (0, enemies.Length)], spawnPoints [i].position, spawnPoints[i].rotation);
-				spawn += 15;
+				Instantiate (enemies [Random.Range (0, enemies.Length)], spawnPoints [i].position, spawnPoints[i].rotation, transform);
+				spawn += 20;
 			} else {
 				spawn -= 20;
 			}

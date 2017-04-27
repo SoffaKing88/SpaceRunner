@@ -61,8 +61,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator GottaGoFast(){
-		for (int i = 0; i < 10; i++) {
-			yield return new WaitForSeconds (10f);
+		for (int i = 0; i < 3; i++) {
+			yield return new WaitForSeconds (30f);
 			gameSpeed += 1f;
 			Debug.Log ("GOTTA GO FAST" + gameSpeed);
 		}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class HealthSystem : MonoBehaviour {
@@ -43,6 +44,9 @@ public class HealthSystem : MonoBehaviour {
 	}
 
 	void Die() {
+		if (gameObject.CompareTag ("Player")) {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+		}
 		Destroy (gameObject);
 	}
 }
