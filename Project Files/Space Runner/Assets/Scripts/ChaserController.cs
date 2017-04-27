@@ -15,11 +15,19 @@ public class ChaserController : MonoBehaviour {
 	float groundRadius = 0.2f;
 	public LayerMask groundLayer;
 
+	private Animator anim;
+	private bool facingRight = true;
+
 	void Start () {
 		hero = GameObject.FindGameObjectWithTag ("Player");
 		heroHealth = hero.GetComponent<HealthSystem> ();
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
+	}
+
+	void Update () {
+		anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
 	}
 
 	void FixedUpdate() {
@@ -46,14 +54,26 @@ public class ChaserController : MonoBehaviour {
 			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
 		if (heroTrans.transform.position.x + 3f >= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)
 			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
+
+		if (rb2d.velocity.x > 0 && !facingRight)
+			Flip ();
+		else if (rb2d.velocity.x < 0 && facingRight)
+			Flip ();
 	}
 
 	void OnTriggerStay2D(Collider2D enter) {
 		if (!heroHealth.invincible){
 			if (enter.CompareTag ("Player")) {
-				heroHealth.Damage (3);
+				heroHealth.Damage (2);
 				Destroy (gameObject);
 			}
 		}
+	}
+
+	void Flip() {
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 }
