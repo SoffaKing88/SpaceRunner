@@ -17,6 +17,7 @@ public class ChaserController : MonoBehaviour {
 
 	private Animator anim;
 	private bool facingRight = true;
+	private HealthSystem health;
 
 	void Start () {
 		hero = GameObject.FindGameObjectWithTag ("Player");
@@ -24,6 +25,7 @@ public class ChaserController : MonoBehaviour {
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
+		health = GetComponent<HealthSystem> ();
 	}
 
 	void Update () {
@@ -65,6 +67,7 @@ public class ChaserController : MonoBehaviour {
 		if (!heroHealth.invincible){
 			if (enter.CompareTag ("Player")) {
 				heroHealth.Damage (2);
+				Instantiate (health.explosion, transform.position, transform.rotation);
 				Destroy (gameObject);
 			}
 		}
