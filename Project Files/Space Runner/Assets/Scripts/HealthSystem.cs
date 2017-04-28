@@ -12,18 +12,19 @@ public class HealthSystem : MonoBehaviour {
 
 	public bool invincible = false;
 
+	public Animation[] children;
+	public GameObject explosion;
+
 	// Variable initiation
 	void Start () {
 		currentHealth = maxHealth;
+		children = GetComponentsInChildren<Animation> ();
 	}
 
 	void Update () {
 		// Health Management checking
 		if (currentHealth > maxHealth)
 			currentHealth = maxHealth;
-
-		if (currentHealth <= 0)
-			Die ();
 	}
 
 	public bool Damage(int dmg) {
@@ -32,10 +33,21 @@ public class HealthSystem : MonoBehaviour {
 		if (!invincible) {
 			currentHealth -= dmg;
 			gameObject.GetComponent<Animation> ().Play ("Red_Flash");
+			if (children.Length > 0) {
+				for (int i = 0; i < children.Length; i++) {
+					children [i].Play ("Red_Flash");
+				}
+			}
 			tookDamage = true;
 			invincible = true;
 			Invoke ("resetInvincibility", invincibleTime);
 		}
+
+		if (currentHealth <= 0) {
+			Instantiate (explosion, transform.position, transform.rotation);
+			Die ();
+		}
+
 		return tookDamage;
 	}
 

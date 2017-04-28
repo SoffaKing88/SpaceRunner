@@ -13,8 +13,12 @@ public class TurretController : MonoBehaviour {
 	public Transform target;
 	public Transform shootPoint;
 
+	private Transform turret;
+	private bool facingRight = false;
+
 	void Start() {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		turret = GameObject.Find ("Turret").transform;
 	}
 
 	void Update() {
@@ -39,5 +43,22 @@ public class TurretController : MonoBehaviour {
 
 			bulletTimer = 0;
 		}
+
+		if(facingRight)
+			turret.transform.right = target.position - turret.transform.position;
+		else
+			turret.transform.right = -(target.position - turret.transform.position);
+		
+		if (target.transform.position.x < transform.position.x && facingRight)
+			Flip ();
+		else if (target.transform.position.x > transform.position.x && !facingRight)
+			Flip ();
+	}
+
+	void Flip() {
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 }

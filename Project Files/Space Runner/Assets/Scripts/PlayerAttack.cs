@@ -6,7 +6,7 @@ public class PlayerAttack : MonoBehaviour {
 	private bool attacking = false;
 
 	private float attackTimer = 0f;
-	private float attackCD = 0.3f;
+	private float attackCD = 0.5f;
 
 	public Collider2D attackTrigger;
 
