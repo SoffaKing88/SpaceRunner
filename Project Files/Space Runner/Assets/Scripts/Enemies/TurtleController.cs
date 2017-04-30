@@ -11,7 +11,7 @@ public class TurtleController : MonoBehaviour {
 
 	private bool facingRight = false;
 	private float knockbackTime;
-	private float moveTimer;
+	private int moveTimer;
 
 	public Transform wallCheck;
 	private bool hittingWall = false;
@@ -24,12 +24,20 @@ public class TurtleController : MonoBehaviour {
 	private bool notAtEdge;
 	public Transform edgeCheck;
 
+	private Animator anim;
+
 	void Start() {
 		health = GetComponent<HealthSystem> ();
 		hero = GameObject.FindGameObjectWithTag ("Player");
 		heroHealth = hero.GetComponent<HealthSystem> ();
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
+	}
+
+	void Update() {
+		anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
+		anim.SetInteger ("MoveTimer", moveTimer);
 	}
 
 	void FixedUpdate() {
@@ -61,12 +69,12 @@ public class TurtleController : MonoBehaviour {
 			rb2d.velocity = new Vector2 (2f, rb2d.velocity.y);
 		}
 
-		if (moveTimer == 80) {
-			Attack ();
-		}
-
 		if (moveTimer >= 80) {
 			moveTimer = 0;
+		}
+
+		if (moveTimer == 8) {
+			Attack ();
 		}
 
 		//Ignore collision while hero is invincible
@@ -100,6 +108,7 @@ public class TurtleController : MonoBehaviour {
 	}
 
 	public void Attack(){
+		Debug.Log ("Attack");
 		GameObject sparkClone;
 		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation) as GameObject;
 		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (-4f, 0f);
