@@ -1,15 +1,12 @@
 fileFormatVersion: 2
-guid: 740227c01cd0d0349858606b2d954f4b
-timeCreated: 1493413540
+guid: 882f256a202a0f94b931fe9de93f9984
+timeCreated: 1493512119
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: slug girl_0
-    21300002: slug girl_1
-    21300004: slug girl_2
-    21300006: slug girl_3
-    21300008: slug girl_4
-    21300010: slug girl_5
+    21300000: the ORB OF POWER_0
+    21300002: the ORB OF POWER_1
+    21300004: the ORB OF POWER_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,7 +47,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 20
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -64,78 +61,39 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slug girl_0
+      name: the ORB OF POWER_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 12
-        width: 31
-        height: 8
+        x: 3
+        y: 8
+        width: 19
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: slug girl_1
+      name: the ORB OF POWER_1
       rect:
         serializedVersion: 2
-        x: 35
-        y: 12
-        width: 31
-        height: 9
+        x: 30
+        y: 5
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: slug girl_2
+      name: the ORB OF POWER_2
       rect:
         serializedVersion: 2
-        x: 70
-        y: 12
-        width: 31
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slug girl_3
-      rect:
-        serializedVersion: 2
-        x: 105
-        y: 12
-        width: 31
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slug girl_4
-      rect:
-        serializedVersion: 2
-        x: 140
-        y: 12
-        width: 31
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: slug girl_5
-      rect:
-        serializedVersion: 2
-        x: 175
-        y: 12
-        width: 30
-        height: 14
+        x: 62
+        y: 5
+        width: 20
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -36,7 +36,11 @@ public class TurtleController : MonoBehaviour {
 	}
 
 	void Update() {
-		anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
+		if (knockbackTime < Time.time)
+			anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
+		else
+			anim.SetFloat ("Speed", 0);
+
 		anim.SetInteger ("MoveTimer", moveTimer);
 	}
 
@@ -45,7 +49,7 @@ public class TurtleController : MonoBehaviour {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallRadius, wallLayer);
 
-		if (hittingWall || !notAtEdge)
+		if ((hittingWall || !notAtEdge) && knockbackTime < Time.time)
 			Flip ();
 
 		//Knockback Management
@@ -108,7 +112,6 @@ public class TurtleController : MonoBehaviour {
 	}
 
 	public void Attack(){
-		Debug.Log ("Attack");
 		GameObject sparkClone;
 		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation) as GameObject;
 		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (-4f, 0f);

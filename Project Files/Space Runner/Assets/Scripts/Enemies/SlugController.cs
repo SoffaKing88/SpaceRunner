@@ -22,6 +22,8 @@ public class SlugController : MonoBehaviour {
 
 	private bool notAtEdge;
 	public Transform edgeCheck;
+
+	private Animator anim;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
@@ -29,6 +31,14 @@ public class SlugController : MonoBehaviour {
 		heroHealth = hero.GetComponent<HealthSystem> ();
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
+		anim = GetComponent<Animator> ();
+	}
+
+	void Update() {
+		if (knockbackTime < Time.time)
+			anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
+		else
+			anim.SetFloat ("Speed", 0);
 	}
 
 	void FixedUpdate() {
@@ -36,7 +46,7 @@ public class SlugController : MonoBehaviour {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallRadius, wallLayer);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallRadius, wallLayer);
 
-		if (hittingWall || !notAtEdge)
+		if ((hittingWall || !notAtEdge) && knockbackTime < Time.time)
 			Flip ();
 
 		//Knockback Management
