@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 15458106246399e4f97af54c25e1978a
-timeCreated: 1493267786
+timeCreated: 1493607552
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -76,9 +76,9 @@ TextureImporter:
       name: spike boys_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 33
         y: 5
-        width: 28
+        width: 27
         height: 19
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
