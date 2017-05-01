@@ -52,9 +52,9 @@ public class ChaserController : MonoBehaviour {
 		//Jumping Management
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
 
-		if (heroTrans.transform.position.x - 3f <= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)
+		if (heroTrans.transform.position.x - 3f <= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded && (transform.position.x - heroTrans.transform.position.x) < 15)
 			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
-		if (heroTrans.transform.position.x + 3f >= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded)
+		if (heroTrans.transform.position.x + 3f >= transform.position.x && heroTrans.transform.position.y > transform.position.y + 3f && grounded && (heroTrans.transform.position.x - transform.position.x ) < 15)
 			rb2d.AddForce (new Vector2 (rb2d.velocity.x, 200f));
 
 		if (rb2d.velocity.x > 0 && !facingRight)
