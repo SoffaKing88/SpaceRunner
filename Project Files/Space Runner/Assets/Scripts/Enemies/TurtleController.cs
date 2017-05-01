@@ -114,8 +114,10 @@ public class TurtleController : MonoBehaviour {
 	public void Attack(){
 		GameObject sparkClone;
 		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation, gameObject.transform) as GameObject;
+		sparkClone.transform.parent = gameObject.transform.parent;
 		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (-4f, 0f);
 		sparkClone = Instantiate(spark, sparkPoint.transform.position, sparkPoint.transform.rotation, gameObject.transform) as GameObject;
+		sparkClone.transform.parent = gameObject.transform.parent;
 		sparkClone.GetComponent<Rigidbody2D> ().velocity = new Vector2 (+4f, 0f);
 	}
 }
