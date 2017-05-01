@@ -18,7 +18,7 @@ public class TurretController : MonoBehaviour {
 
 	void Start() {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
-		turret = GameObject.Find ("Turret").transform;
+		turret = this.gameObject.transform.GetChild (1);
 	}
 
 	void Update() {
