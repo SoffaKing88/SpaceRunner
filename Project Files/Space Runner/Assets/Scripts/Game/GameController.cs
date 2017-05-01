@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 
 	public GameObject[] enemies;
 
-	/*void Start(){
+	void Start(){
 		spawnPoint = GetComponent<Transform> ();
 		index = 0;
 		SpawnRooms(index);
@@ -76,5 +76,5 @@ public class GameController : MonoBehaviour {
 			yield return new WaitForSecondsRealtime (1f);
 		}
 		Time.timeScale = 1;
-	}*/
+	}
 }
