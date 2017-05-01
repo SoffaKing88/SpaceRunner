@@ -22,11 +22,14 @@ public class CharacterMovement : MonoBehaviour {
 
 	public float knockbackTime;
 
+	private Animator anim;
+
 	//Initiate objects in variables
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
 		gm = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		health = GetComponent<HealthSystem> ();
+		anim = GetComponent<Animator> ();
 	}
 
 	void FixedUpdate () {
@@ -58,8 +61,12 @@ public class CharacterMovement : MonoBehaviour {
 		//Check if Character is on the ground, if so allow a double jump
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, groundLayer);
 
-		if (grounded)
+		if (grounded) {
 			doubleJump = false;
+			anim.SetBool ("Jumping", false);
+		} else if (!grounded) {
+			anim.SetBool ("Jumping", true);
+		}
 
 		if (health.tookDamage) {
 			Knockback (400f);
@@ -75,10 +82,14 @@ public class CharacterMovement : MonoBehaviour {
 		//If character is grounded or hasn't used their double jump and the space bar is hit, Jump
 		if ((grounded || !doubleJump) && Input.GetKeyDown (KeyCode.Space)) {
 			rb2d.AddForce(new Vector2(0, jumpForce));
+			anim.SetBool ("Jumping", true);
 
 			if (!doubleJump && !grounded)
 				doubleJump = true;
 		}
+
+		anim.SetFloat ("X Speed", Mathf.Abs(rb2d.velocity.x));
+		anim.SetFloat ("Y Speed", Mathf.Abs(rb2d.velocity.y));
 	}
 
 	void Flip() {
