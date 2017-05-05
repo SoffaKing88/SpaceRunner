@@ -24,6 +24,9 @@ public class SlugController : MonoBehaviour {
 	public Transform edgeCheck;
 
 	private Animator anim;
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+	private float playTime = 0f;
 		
 	void Start () {
 		health = GetComponent<HealthSystem> ();
@@ -32,6 +35,7 @@ public class SlugController : MonoBehaviour {
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void Update() {
@@ -39,6 +43,12 @@ public class SlugController : MonoBehaviour {
 			anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
 		else
 			anim.SetFloat ("Speed", 0);
+
+		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && notAtEdge && playTime < Time.time) {
+			playSpot.pitch = Random.Range(1f,1.1f);
+			playSpot.PlayOneShot (sounds [0]);
+			playTime = Time.time + sounds [0].length;
+		}
 	}
 
 	void FixedUpdate() {
