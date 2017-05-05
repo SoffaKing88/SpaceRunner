@@ -15,11 +15,6 @@ public class CameraMovement : MonoBehaviour {
 
 			shakeTimer -= Time.deltaTime;
 		}
-			
-		//Used for testing Camera Shake, will use different trigger later on
-		if (Input.GetButtonDown ("Fire1")) {
-			ShakeCamera (0.05f, 1);
-		}
 
 		//Slowly resets camera when shake bumps it too far up or down
 		if (transform.position.y >= 0) {

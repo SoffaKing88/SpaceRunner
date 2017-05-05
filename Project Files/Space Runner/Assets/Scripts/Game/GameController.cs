@@ -69,12 +69,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	IEnumerator GameStart(){
-		Time.timeScale = 0;
+		gameSpeed = 0;
 		Debug.Log ("Game Start in: ");
 		for (int i = 3; i >= 0; i--) {
 			Debug.Log (i);
 			yield return new WaitForSecondsRealtime (1f);
 		}
-		Time.timeScale = 1;
+		gameSpeed = 2;
 	}
 }

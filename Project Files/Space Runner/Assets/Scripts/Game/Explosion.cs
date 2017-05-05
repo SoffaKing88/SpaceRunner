@@ -4,9 +4,12 @@ using System.Collections;
 public class Explosion : MonoBehaviour {
 
 	private SpriteRenderer sprite;
+	private CameraMovement mainCamera;
 
 	void Start () {
 		sprite = GetComponent<SpriteRenderer> ();
+		mainCamera = GameObject.Find ("Main Camera").GetComponent<CameraMovement>();
+		mainCamera.ShakeCamera (0.05f, 1);
 		StartCoroutine (Wait ());
 	}
 
