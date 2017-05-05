@@ -113,6 +113,7 @@ public class CharacterMovement : MonoBehaviour {
 		if (col.CompareTag ("Gem")) {
 			Destroy (col.gameObject);
 			gc.gemAmount += 1;
+			playSpot.PlayOneShot (sounds [1]);
 		}
 	}
 
