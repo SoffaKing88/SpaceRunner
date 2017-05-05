@@ -16,9 +16,13 @@ public class TurretController : MonoBehaviour {
 	private Transform turret;
 	private bool facingRight = false;
 
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+
 	void Start() {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		turret = this.gameObject.transform.GetChild (1);
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void Update() {
@@ -36,6 +40,9 @@ public class TurretController : MonoBehaviour {
 		if (bulletTimer >= shootInterval) {
 			Vector2 direction = target.transform.position - transform.position;
 			direction.Normalize ();
+
+			playSpot.pitch = Random.Range(1f,1.1f);
+			playSpot.PlayOneShot (sounds [0]);
 
 			GameObject bulletClone;
 			bulletClone = Instantiate (bullet, shootPoint.transform.position, shootPoint.transform.rotation) as GameObject;
