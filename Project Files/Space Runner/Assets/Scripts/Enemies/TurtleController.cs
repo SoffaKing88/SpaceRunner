@@ -25,6 +25,9 @@ public class TurtleController : MonoBehaviour {
 	public Transform edgeCheck;
 
 	private Animator anim;
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+	private float playTime = 0f;
 
 	void Start() {
 		health = GetComponent<HealthSystem> ();
@@ -33,6 +36,7 @@ public class TurtleController : MonoBehaviour {
 		heroTrans = hero.GetComponent<Transform> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void Update() {
@@ -42,6 +46,11 @@ public class TurtleController : MonoBehaviour {
 			anim.SetFloat ("Speed", 0);
 
 		anim.SetInteger ("MoveTimer", moveTimer);
+		if (Mathf.Abs(rb2d.velocity.x) < 0.1f && playTime < Time.time) {
+			playSpot.pitch = Random.Range(1f,2f);
+			playSpot.PlayOneShot (sounds [0]);
+			playTime = Time.time + (sounds [0].length * 2);
+		}
 	}
 
 	void FixedUpdate() {
