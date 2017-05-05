@@ -6,6 +6,9 @@ public class GameController : MonoBehaviour {
 
 	public int gemAmount = 0;
 	public Text gemText;
+	public float distanceAmount = 0;
+	public Text distanceText;
+	private Vector2 lastPosition;
 
 	public GameObject[] levels;
 	private Transform spawnPoint;
@@ -20,6 +23,7 @@ public class GameController : MonoBehaviour {
 	void Start(){
 		spawnPoint = GetComponent<Transform> ();
 		index = 0;
+		lastPosition = transform.localPosition;
 		SpawnRooms(index);
 		StartCoroutine (GottaGoFast ());
 		StartCoroutine (GameStart ());
@@ -33,6 +37,7 @@ public class GameController : MonoBehaviour {
 
 		if (spawnPoint.position.x < 35) {
 			spawnPoint.position = new Vector3(spawnPoint.position.x + 35f, spawnPoint.position.y);
+			distanceAmount -= 35f;
 			index = Random.Range (0, levels.Length);
 			if (lastIndex == 0 || (lastIndex == 0 && lastIndex == index)) {
 				validChoices = new int[] {1, 2, 3};
@@ -52,8 +57,11 @@ public class GameController : MonoBehaviour {
 				SpawnRooms (index);
 			}
 		}
+		distanceAmount += Vector2.Distance (transform.localPosition, lastPosition);
+		lastPosition = transform.localPosition;
 
-		gemText.text = ("Gems: " + gemAmount);
+		gemText.text = string.Format ("Gems: {0}", gemAmount);
+		distanceText.text = string.Format ("Distance: {0:#0.0}", distanceAmount);
 	}
 
 	void SpawnRooms(int spawnIndex){
