@@ -35,6 +35,7 @@ public class PlayerAttack : MonoBehaviour {
 			if (attackTimer > 0) {
 				attackTimer -= Time.deltaTime;
 				if (playTime < Time.time) {
+					playSpot.pitch = Random.Range (0.5f, 1f);
 					playSpot.PlayOneShot (sounds [0]);
 					playTime = Time.time + sounds [0].length;
 				}

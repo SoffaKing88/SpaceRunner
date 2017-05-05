@@ -96,6 +96,7 @@ public class CharacterMovement : MonoBehaviour {
 		anim.SetFloat ("Y Speed", Mathf.Abs(rb2d.velocity.y));
 
 		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && grounded && timeCheck < Time.time) {
+			playSpot.pitch = Random.Range(1f,2f);
 			playSpot.PlayOneShot (sounds [0]);
 			timeCheck = Time.time + sounds [0].length;
 		}
@@ -113,6 +114,7 @@ public class CharacterMovement : MonoBehaviour {
 		if (col.CompareTag ("Gem")) {
 			Destroy (col.gameObject);
 			gc.gemAmount += 1;
+			playSpot.pitch = 1f;
 			playSpot.PlayOneShot (sounds [1]);
 		}
 	}
