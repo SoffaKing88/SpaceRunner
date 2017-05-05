@@ -9,13 +9,23 @@ public class LaserController : MonoBehaviour {
 	private Collider2D laser;
 	private SpriteRenderer beam;
 
+	private AudioSource playSpot;
+
 	void Start() {
 		laser = GetComponent<Collider2D> ();
 		beam = GameObject.Find("Beam").GetComponent<SpriteRenderer>();
+		playSpot = GetComponent<AudioSource> ();
 		laser.enabled = false;
 		beam.enabled = false;
 		StartCoroutine (FireLaser ());
-		Debug.Log (beam);
+	}
+
+	void Update(){
+		if (laser.enabled) {
+			playSpot.enabled = true;
+		} else {
+			playSpot.enabled = false;
+		}
 	}
 
 	IEnumerator FireLaser() {
