@@ -52,6 +52,8 @@ public class GameController : MonoBehaviour {
 				SpawnRooms (index);
 			}
 		}
+
+		gemText.text = ("Gems: " + gemAmount);
 	}
 
 	void SpawnRooms(int spawnIndex){
