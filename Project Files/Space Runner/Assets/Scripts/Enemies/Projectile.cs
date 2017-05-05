@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour {
 
 	private float startTime;
 	private float destroyTime;
+	private AudioSource sound;
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.isTrigger != true) {
@@ -22,6 +23,8 @@ public class Projectile : MonoBehaviour {
 
 	void Start() {
 		destroyTime = Time.time + 5f;
+		sound = GetComponent<AudioSource> ();
+		sound.pitch = Random.Range (-3f, 3f);
 	}
 
 	void Update(){
