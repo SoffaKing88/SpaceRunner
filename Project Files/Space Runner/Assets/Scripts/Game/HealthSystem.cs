@@ -14,11 +14,15 @@ public class HealthSystem : MonoBehaviour {
 
 	public Animation[] children;
 	public GameObject explosion;
+	public GameObject gemClone;
+
+	private GameController gc;
 
 	// Variable initiation
 	void Start () {
 		currentHealth = maxHealth;
 		children = GetComponentsInChildren<Animation> ();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 
 	void Update () {
@@ -59,6 +63,12 @@ public class HealthSystem : MonoBehaviour {
 		if (gameObject.CompareTag ("Player")) {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
 		}
+		GameObject deathGem;
+		for (int i = 0; i < gc.gameSpeed; i++) {
+			deathGem = Instantiate (gemClone, transform.position, transform.rotation) as GameObject;
+			deathGem.GetComponent<Rigidbody2D> ().velocity = new Vector2 (Random.Range (-5f, 5f), Random.Range (5f, 10f));
+		}
+
 		Destroy (gameObject);
 	}
 }

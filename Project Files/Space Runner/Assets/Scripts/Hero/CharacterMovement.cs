@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour {
 	private bool doubleJump = false;
 
 	private Rigidbody2D rb2d;
-	private GameController gm;
+	private GameController gc;
 	private HealthSystem health;
 
 	public float knockbackTime;
@@ -27,7 +27,7 @@ public class CharacterMovement : MonoBehaviour {
 	//Initiate objects in variables
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		gm = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		health = GetComponent<HealthSystem> ();
 		anim = GetComponent<Animator> ();
 	}
@@ -47,9 +47,9 @@ public class CharacterMovement : MonoBehaviour {
 			rb2d.velocity = new Vector2 (rb2d.velocity.x, -maxSpeed);
 		}
 		if (move == 0 && facingRight && grounded) {
-			transform.Translate (Vector3.left * gm.gameSpeed * Time.deltaTime);
+			transform.Translate (Vector3.left * gc.gameSpeed * Time.deltaTime);
 		} else if (move == 0 && !facingRight && grounded) {
-			transform.Translate (Vector3.right * gm.gameSpeed * Time.deltaTime);
+			transform.Translate (Vector3.right * gc.gameSpeed * Time.deltaTime);
 		}
 
 		//Flip Character Direction (Sprite, colliders, etc.)
@@ -103,7 +103,7 @@ public class CharacterMovement : MonoBehaviour {
 		//If character hits a gem, destroy it and add to gem counter
 		if (col.CompareTag ("Gem")) {
 			Destroy (col.gameObject);
-			gm.gemAmount += 1;
+			gc.gemAmount += 1;
 		}
 	}
 
