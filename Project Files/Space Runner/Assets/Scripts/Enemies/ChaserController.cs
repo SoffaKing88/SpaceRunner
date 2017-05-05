@@ -19,6 +19,10 @@ public class ChaserController : MonoBehaviour {
 	private bool facingRight = true;
 	private HealthSystem health;
 
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+	private float playTime = 0f;
+
 	void Start () {
 		hero = GameObject.FindGameObjectWithTag ("Player");
 		heroHealth = hero.GetComponent<HealthSystem> ();
@@ -26,10 +30,17 @@ public class ChaserController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 		health = GetComponent<HealthSystem> ();
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void Update () {
 		anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
+
+		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && playTime < Time.time) {
+			playSpot.pitch = Random.Range(1f,1.5f);
+			playSpot.PlayOneShot(sounds[0]);
+			playTime = Time.time + sounds [0].length - 0.1f;
+		}
 	}
 
 	void FixedUpdate() {
