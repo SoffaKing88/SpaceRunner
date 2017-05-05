@@ -36,7 +36,7 @@ public class ChaserController : MonoBehaviour {
 	void Update () {
 		anim.SetFloat ("Speed", Mathf.Abs(rb2d.velocity.x));
 
-		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && playTime < Time.time) {
+		if (Mathf.Abs(rb2d.velocity.x) >= 5f && playTime < Time.time) {
 			playSpot.pitch = Random.Range(1f,1.5f);
 			playSpot.PlayOneShot(sounds[0]);
 			playTime = Time.time + sounds [0].length - 0.1f;
