@@ -95,7 +95,7 @@ public class CharacterMovement : MonoBehaviour {
 		anim.SetFloat ("X Speed", Mathf.Abs(rb2d.velocity.x));
 		anim.SetFloat ("Y Speed", Mathf.Abs(rb2d.velocity.y));
 
-		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && Mathf.Abs(rb2d.velocity.y) < 0.1f && timeCheck < Time.time) {
+		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && grounded && timeCheck < Time.time) {
 			playSpot.PlayOneShot (sounds [0]);
 			timeCheck = Time.time + sounds [0].length;
 		}
