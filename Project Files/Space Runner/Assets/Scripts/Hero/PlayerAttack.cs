@@ -9,13 +9,17 @@ public class PlayerAttack : MonoBehaviour {
 	private float attackCD = 0.4f;
 
 	public Collider2D attackTrigger;
-
 	private Animator anim;
 
-	void Awake() {
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+	private float playTime;
+
+	void Start() {
 		// Make sure collider isn't automatically on and hitting things
 		attackTrigger.enabled = false;
 		anim = GetComponent<Animator> ();
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void Update() {
@@ -30,6 +34,10 @@ public class PlayerAttack : MonoBehaviour {
 		if (attacking) {
 			if (attackTimer > 0) {
 				attackTimer -= Time.deltaTime;
+				if (playTime < Time.time) {
+					playSpot.PlayOneShot (sounds [0]);
+					playTime = Time.time + sounds [0].length;
+				}
 			} else {
 				attacking = false;
 				attackTrigger.enabled = false;

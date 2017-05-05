@@ -7,6 +7,7 @@ public class CharacterMovement : MonoBehaviour {
 	//Used for horizontal movement
 	private bool facingRight = true;
 	public float maxSpeed = 15f;
+	public float knockbackTime;
 
 	//Used for Jumping
 	public float jumpForce = 500f;
@@ -20,16 +21,19 @@ public class CharacterMovement : MonoBehaviour {
 	private GameController gc;
 	private HealthSystem health;
 
-	public float knockbackTime;
-
 	private Animator anim;
 
+	private AudioSource playSpot;
+	public AudioClip[] sounds;
+	private float timeCheck = 0f;
+
 	//Initiate objects in variables
-	void Awake () {
+	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		health = GetComponent<HealthSystem> ();
 		anim = GetComponent<Animator> ();
+		playSpot = GetComponent<AudioSource> ();
 	}
 
 	void FixedUpdate () {
@@ -90,6 +94,11 @@ public class CharacterMovement : MonoBehaviour {
 
 		anim.SetFloat ("X Speed", Mathf.Abs(rb2d.velocity.x));
 		anim.SetFloat ("Y Speed", Mathf.Abs(rb2d.velocity.y));
+
+		if (Mathf.Abs(rb2d.velocity.x) > 0.1f && Mathf.Abs(rb2d.velocity.y) < 0.1f && timeCheck < Time.time) {
+			playSpot.PlayOneShot (sounds [0]);
+			timeCheck = Time.time + sounds [0].length;
+		}
 	}
 
 	void Flip() {
